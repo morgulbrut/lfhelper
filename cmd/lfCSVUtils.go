@@ -9,6 +9,7 @@ import (
 
 	"github.com/dannav/hhmmss"
 	"github.com/morgulbrut/helferlein"
+	"github.com/morgulbrut/lfhelper/trainingdata"
 	"gopkg.in/yaml.v2"
 )
 
@@ -42,23 +43,9 @@ func (csv *CsvScheme) readScheme(fn string) *CsvScheme {
 	return csv
 }
 
-type CSV struct {
-	ProgName  string
-	RunTime   time.Duration
-	Cals      int
-	Distance  float64
-	RiseDist  int
-	AvSpeed   float64
-	AvPace    time.Duration
-	AvPower   int
-	AvHeartR  int
-	Product   string
-	Timestamp time.Time
-}
-
-func ReadCVS(fn string) CSV {
+func ReadCVS(fn string) trainingdata.TrainingUnit {
 	var scheme CsvScheme
-	var lf CSV
+	var lf trainingdata.TrainingUnit
 	scheme.readScheme("scheme.yml")
 
 	data, err := helferlein.ReadLines(fn)
