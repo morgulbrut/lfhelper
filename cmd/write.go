@@ -1,31 +1,33 @@
 package cmd
 
 import (
+	"encoding/json"
+	"io/ioutil"
+	"log"
+
 	"github.com/spf13/cobra"
 )
 
 // writeCmd represents the write command
 var writeCmd = &cobra.Command{
 	Use:   "write",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Writes to a file or db",
+}
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+var writeJSONCmd = &cobra.Command{
+	Use:   "json <csv> <json>",
+	Short: "<csv> <json> : reads a LifeFitness CSV and writes a json file",
+	Run: func(cmd *cobra.Command, args []string) {
+		csv := ReadCVS(args[0])
+		json, err := json.Marshal(csv)
+		if err != nil {
+			log.Fatalf("WriteJson marshal: %v", err)
+		}
+		ioutil.WriteFile(args[1], json, 0644)
+	},
 }
 
 func init() {
 	rootCmd.AddCommand(writeCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// writeCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// writeCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	writeCmd.AddCommand(writeJSONCmd)
 }

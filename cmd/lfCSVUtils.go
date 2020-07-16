@@ -8,41 +8,9 @@ import (
 	"time"
 
 	"github.com/dannav/hhmmss"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/morgulbrut/helferlein"
-	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )
-
-// csvCmd represents the csv command
-var csvCmd = &cobra.Command{
-	Use:   "csv",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		csv := ReadCVS(args[0])
-		spew.Dump(csv)
-	},
-}
-
-func init() {
-	readCmd.AddCommand(csvCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// csvCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// csvCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
-}
 
 // CsvScheme descripes the names of the fields because
 // LifeFitness don't know how to CSV
